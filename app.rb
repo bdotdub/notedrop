@@ -2,6 +2,18 @@ require "dropbox-api"
 require "redcarpet"
 require "sinatra"
 
+if ENV["KEEPALIVE_URL"] != ""
+  Thread.new do
+    require "parse"
+    require "uri"
+
+    while true
+      Net::HTTP.get(URI.parse(ENV["KEEPALIVE_URL"]))
+      sleep 30
+    end
+  end
+end
+
 Dropbox::API::Config.app_key    = ENV["DROPBOX_APP_KEY"]
 Dropbox::API::Config.app_secret = ENV["DROPBOX_APP_SECRET"]
 Dropbox::API::Config.mode       = "sandbox"
