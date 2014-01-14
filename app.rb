@@ -1,14 +1,9 @@
 require "dropbox-api"
-require "hashie"
 require "redcarpet"
 require "sinatra"
-require "yaml"
 
-config_file = "config.yml"
-Config = Hashie::Mash.new(YAML.load_file(config_file))
-
-Dropbox::API::Config.app_key    = Config.dropbox.app[:key]
-Dropbox::API::Config.app_secret = Config.dropbox.app[:secret]
+Dropbox::API::Config.app_key    = ENV["DROPBOX_APP_KEY"]
+Dropbox::API::Config.app_secret = ENV["DROPBOX_APP_SECRET"]
 Dropbox::API::Config.mode       = "sandbox"
 
 get "/:note" do
@@ -19,6 +14,6 @@ end
 
 helpers do
   def client
-    @client ||= Dropbox::API::Client.new(token: Config.dropbox.user[:key], secret: Config.dropbox.user[:secret])
+    @client ||= Dropbox::API::Client.new(token: ENV["DROPBOX_USER_KEY"], secret: ENV["DROPBOX_USER_SECRET"])
   end
 end
