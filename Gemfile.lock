@@ -22,4 +22,5 @@ PLATFORMS
 
 DEPENDENCIES
   dropbox-api
+  hashie
   sinatra
