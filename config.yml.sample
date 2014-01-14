@@ -1,0 +1,5 @@
+---
+dropbox:
+  user:
+    key: <AUTH KEY>
+    secret: <AUTH SECRET>
